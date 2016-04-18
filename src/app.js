@@ -114,7 +114,7 @@ app.all('*', function (req, res, next) {
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] == FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
-        
+
         setTimeout(function () {
             doSubscribeRequest();
         }, 3000);
@@ -125,11 +125,14 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     try {
-        var messaging_events = req.body.entry[0].messaging;
-        for (var i = 0; i < messaging_events.length; i++) {
-            var event = req.body.entry[0].messaging[i];
-            processEvent(event);
-        }
+    	for (var j = 0; j < req.body.entry.length; j++) {
+    		var entry = req.body.entry[j];
+	        var messaging_events = entry.messaging;
+	        for (var i = 0; i < messaging_events.length; i++) {
+	            var event = entry.messaging[i];
+	            processEvent(event);
+	        }
+    	}
         return res.status(200).json({
             status: "ok"
         });
