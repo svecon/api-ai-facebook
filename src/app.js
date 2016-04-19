@@ -49,6 +49,9 @@ function processEvent(event) {
                 } else if (isDefined(responseText)) {
                     console.log('Response as text message');
                     sendFBMessage(sender, {text: responseText});
+                } else {
+                	console.log('No response');
+                    sendFBMessage(sender, {text: 'no resonse text from api.ai'});
                 }
 
             }
