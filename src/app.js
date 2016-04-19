@@ -54,7 +54,10 @@ function processEvent(event) {
             }
         });
 
-        apiaiRequest.on('error', (error) => console.error(error));
+        apiaiRequest.on('error', (error) => {
+        	console.error(error);
+        	sendFBMessage(sender, {text: error});
+    	});
         apiaiRequest.end();
     }
 }
